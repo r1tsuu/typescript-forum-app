@@ -1,0 +1,7 @@
+{
+    "_?description": "Create config.json in src folder like this: (without description)",
+    "SECRET_TOKEN": "yoursupermegasecrettoken",
+    "TOKEN_EXPIRATIN_TIME": "12312312312",
+    "SERVER_PORT": 3000,
+    "DB_NAME": "test_db"
+}
