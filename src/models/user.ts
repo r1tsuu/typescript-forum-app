@@ -15,23 +15,25 @@ interface IUser extends IModel {
  * Model of User
  */
 export class User extends Model implements IUser {
-    public rating: number
+    private _rating: number
 
-    public username: string
-    public email: string
-    public password: string
-    public registerDate: string
+    private _username: string
+    private _email: string
+    private _password: string
+    private _registerDate: string
 
-    public isSuperuser: boolean
+    private _isSuperuser: boolean
 
     constructor(user: IUser) {
         super()
-        this.id = user.id
+        /** @private set */
+        this._id = user.id
+        this._registerDate = user.registerDate
+        /** @public set */
         this.rating = user.rating
         this.username = user.username
         this.email = user.email
         this.password = user.password
-        this.registerDate = user.registerDate
         this.isSuperuser = user.isSuperuser
     }
 
@@ -60,7 +62,7 @@ export class User extends Model implements IUser {
         }
     }
 
-    public static async find(username: string):Promise<User> {
+    public static async find(username: string): Promise<User> {
         try {
             const userData = (await query('SELECT * FROM USERS WHERE username=$1;', [username])).rows[0]
             if (userData) {
@@ -116,61 +118,47 @@ export class User extends Model implements IUser {
         }
     }
 
-    /**
-     * Set up user after created
-     * @private
-     */
-    private setProps(id: number, username: string, email: string, password: string, registerDate: string, IsSuperuser: boolean): User {
-        this.id = id
-        this.username = username
-        this.email = email
-        this.password = password
-        this.isSuperuser = IsSuperuser
-        this.registerDate = registerDate
-        return this
+    public get rating(): number {
+        return this._rating
     }
 
-    public getRating(): number {
-        return this.rating
+    public set rating(value: number) {
+        this._rating = value
     }
 
-    public setRating(rating: number): void {
-        this.rating = rating
+    public get username(): string {
+        return this._username
     }
 
-    public getUsername(): string {
-        return this.username
+    public set username(value: string) {
+        this._username = value
     }
 
-    public setUsername(username: string): void {
-        this.username = username
+    public get email(): string {
+        return this._email
     }
 
-    public getEmail(): string {
-        return this.email
+    public set email(value: string) {
+        this._email = value
     }
 
-    public setEmail(email: string): void {
-        this.email = email
+    public get password(): string {
+        return this._password
     }
 
-    public getPassword(): string {
-        return this.password
+    public set password(value: string) {
+        this._password = value
     }
 
-    public setPassword(password: string): void {
-        this.password = password
+    public get registerDate(): string {
+        return this._registerDate
     }
 
-    public getRegisterDate(): string {
-        return this.registerDate
+    public get isSuperuser(): boolean {
+        return this._isSuperuser
     }
 
-    public getIsSuperuser(): boolean {
-        return this.isSuperuser
-    }
-
-    public setIsSuperuser(IsSuperuser: boolean): void {
-        this.isSuperuser = IsSuperuser
+    public set isSuperuser(value: boolean) {
+        this._isSuperuser = value
     }
 }
